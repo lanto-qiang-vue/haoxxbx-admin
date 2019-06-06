@@ -43,6 +43,7 @@ export default {
 		background-color: white;
 		border-bottom: 2px solid #064998;
 		text-align: center;
+		box-shadow:0 1px 4px 0 rgba(0,21,41,0.12);
 		.center{
 			max-width: 1200px;
 			display: inline-block;
