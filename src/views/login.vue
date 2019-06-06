@@ -1,10 +1,9 @@
 <template>
 <div class="login">
-	<div class="block">
-		<h1><img src="~@/assets/img/hoxiuxiu-logo.png"/>保险数据管理系统</h1>
-	</div>
+<div class="center">
+	<h1><img src="~@/assets/img/hoxiuxiu-logo.png"/>保险理赔数据比对</h1>
 	<div class="input-box">
-		<Tabs value="phone">
+		<Tabs v-model="tab">
 			<TabPane label="验证码登录" name="phone">
 				<Form ref="phone" :rules="rulePhone"  :model="formPhone"  @keydown.enter.native="toLogin('phone')">
 					<FormItem prop="userMobile">
@@ -14,17 +13,14 @@
 	                </span>
 						</Input>
 					</FormItem>
-					<FormItem prop="captcha">
+					<FormItem prop="captcha" class="captcha">
 						<Input v-model="formPhone.captcha" placeholder="请输入验证码" size="large">
 						<span slot="prepend">
 	                      <Icon :size="14" type="md-lock"></Icon>
 	                    </span>
-						<span slot="append"><Button  type="primary" @click='getCaptcha(false)'>
-	                      {{description}}</Button></span>
 						</Input>
-					</FormItem>
-					<FormItem style="margin-bottom: 10px">
-						<Button type="primary" long size="large" @click="toLogin('phone')">验证并登录</Button>
+						<countdown class="get-code" text="获取验证码" ref="countdown"
+						           :phone="formPhone.userMobile" @click="getCode" url="/operate/account/getCode"></countdown>
 					</FormItem>
 				</Form>
 			</TabPane>
@@ -43,26 +39,28 @@
 	                  <Icon :size="14" type="md-lock"></Icon>
 	                </span>
 						</Input>
+						<a class="forget">忘记密码？</a>
 					</FormItem>
-					<FormItem style="margin-bottom: 10px">
-						<Button type="primary" long size="large" @click="toLogin('pass')">登录</Button>
-					</FormItem>
-					<div class="deal">
-						<a style="float: right" @click="showFind= true">忘记密码?</a>
-					</div>
-
 				</Form>
+
 			</TabPane>
 		</Tabs>
+		<Button type="primary" long size="large" @click="toLogin('pass')">{{tab=='phone'?'验证并登录':'登录'}}</Button>
 	</div>
+</div>
+<foot></foot>
 </div>
 </template>
 
 <script>
+import Countdown from '@/components/countdown-button.vue'
+import Foot from '@/components/Footer.vue'
 export default {
 	name: "login",
+	components: {Countdown, Foot},
 	data(){
 		return{
+			tab: 'phone',
 			formPhone: {
 
 			},
@@ -80,5 +78,90 @@ export default {
 </script>
 
 <style scoped lang="less">
-
+.login{
+	height: 100vh;
+	min-height: 800px!important;
+	border-bottom: 60px solid white;
+	position: relative;
+	background:linear-gradient(180deg,rgba(0,206,246,0) 30%,rgba(201,243,252,0) 55%,rgba(104,205,251,1) 100%);
+	.center{
+		width: 500px;
+		position: absolute;
+		left: 50%;
+		top: 40%;
+		transform: translate(-50%, -50%);
+		>h1{
+			font-size: 30px;
+			font-weight: 400;
+			margin-bottom: 55px;
+			text-align: center;
+			img{
+				height: 50px;
+				margin-right: 20px;
+				vertical-align: text-bottom;
+			}
+		}
+		.input-box{
+			padding: 50px 90px;
+			box-shadow:0 6px 9px 0 rgba(0,0,0,0.08);
+			border-radius:5px;
+			border:1px solid rgba(231,231,231,0.62);
+			background-color: white;
+			.get-code{
+				width: 90px;
+				line-height: 34px;
+				text-align: center;
+				position: absolute;
+				top: 0;
+				right: 0;
+				background-color: #ECF5FF;
+				border-radius: 2px;
+				border: 1px solid #B3D8FF;
+				color: #1890FF;
+				cursor: pointer;
+				&.off{
+					border: 1px solid #dcdee2;
+					background-color: white;
+					color: #777777;
+					cursor: default;
+				}
+			}
+			.forget{
+				position: absolute;
+				right: 0;
+				bottom: -35px;
+				color: #6E7F94;
+				font-size: 12px;
+			}
+		}
+	}
+	.footer{
+		position: absolute;
+		left: 0;
+		bottom: -60px;
+		width: 100%;
+	}
+}
+</style>
+<style lang="less">
+.login{
+	.ivu-tabs-bar{
+		border: 0;
+	}
+	.ivu-tabs-nav-scroll{
+		text-align: center;
+		.ivu-tabs-nav{
+			float: none;
+			display: inline-block;
+		}
+	}
+	.input-box{
+		.captcha .ivu-form-item-content{
+			padding-right: 100px;
+		}
+	}
+	form{
+		margin: 30px 0 40px;
+	}
+}
 </style>

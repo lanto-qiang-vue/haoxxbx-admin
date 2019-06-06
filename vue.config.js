@@ -6,12 +6,17 @@ const resolve = dir => {
 module.exports = {
 	chainWebpack: config => {
 		config.resolve.alias
-			.set('@', resolve('src')) // key,value自行定义，比如.set('@@', resolve('src/components'))
+			.set('@', resolve('src'))
 			.set('~', resolve('/'))
 	},
-	// 打包时不生成.map文件
 	productionSourceMap: false,
-
+	css:{
+		loaderOptions: {
+			less:{
+				javascriptEnabled: true
+			}
+		}
+	},
 	devServer: {
 		port: 9999,
 		proxy: {

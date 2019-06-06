@@ -27,6 +27,7 @@ routes: [
 				path: '/change-pass',
 				name: 'change-pass',
 				meta:{
+					name: '修改密码'
 				},
 				component: () => import('@/views/change-pass.vue')
 			},
@@ -34,6 +35,7 @@ routes: [
 				path: '/compare',
 				name: 'compare',
 				meta:{
+					name: '保险理赔数据比对'
 				},
 				component: () => import('@/views/compare.vue')
 			},
