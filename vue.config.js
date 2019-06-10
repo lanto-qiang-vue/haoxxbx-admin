@@ -21,7 +21,7 @@ module.exports = {
 		port: 9999,
 		proxy: {
 			'/proxy/': {
-				target: 'http://192.168.169.231:10032/hxx-proxy/',
+				target: 'http://192.168.169.231:8888/',
                 pathRewrite: {'^/proxy/': ''},
                 secure: false
 			},
