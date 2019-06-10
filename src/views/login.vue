@@ -3,7 +3,7 @@
 <div class="center">
 	<h1><img src="~@/assets/img/hoxiuxiu-logo.png"/>保险理赔数据比对</h1>
 	<div class="input-box">
-		<Tabs v-model="tab">
+		<Tabs v-model="type">
 			<TabPane label="验证码登录" name="phone">
 				<Form ref="phone" :rules="rulePhone"  :model="formPhone"  @keydown.enter.native="toLogin('phone')">
 					<FormItem prop="userMobile">
@@ -60,7 +60,7 @@ export default {
 	components: {Countdown, Foot},
 	data(){
 		return{
-			tab: 'phone',
+			type: 'phone',
 			formPhone: {
 
 			},
@@ -70,7 +70,7 @@ export default {
 		}
 	},
 	methods:{
-		toLogin(){
+		toLogin(type){
 
 		}
 	}
