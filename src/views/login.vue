@@ -31,7 +31,7 @@
 						<span slot="prepend">
 	                  <Icon :size="16" type="ios-person"></Icon>
 	                </span>
-						</Input>
+					</Input>
 					</FormItem>
 					<FormItem prop="password">
 						<Input type="password" v-model="formPass.password" size="large" placeholder="请输入密码">
