@@ -5,7 +5,7 @@
 	<div class="input-box">
 		<Tabs v-model="type">
 			<TabPane label="验证码登录" name="phone">
-				<Form ref="phone" :rules="rulePhone"  :model="formPhone"  @keydown.enter.native="toLogin('phone')">
+				<Form ref="phone" :rules="rulePhone"  :model="formPhone"  @keydown.enter.native="toLogin()">
 					<FormItem prop="userMobile">
 						<Input v-model="formPhone.userMobile" :maxlength="11" size="large" placeholder="请输入手机号">
 						<span slot="prepend">
@@ -20,12 +20,12 @@
 	                    </span>
 						</Input>
 						<countdown class="get-code" text="获取验证码" ref="countdown"
-						           :phone="formPhone.userMobile" @click="getCode" url="/operate/account/getCode"></countdown>
+						           :phone="formPhone.userMobile" @click="getCode" url="/hxxdc/insurance/sms/send/login"></countdown>
 					</FormItem>
 				</Form>
 			</TabPane>
 			<TabPane label="密码登录" name="pass">
-				<Form ref="pass" :model="formPass" @keydown.enter.native="toLogin('pass')">
+				<Form ref="pass" :rules="rulePass" :model="formPass" @keydown.enter.native="toLogin()">
 					<FormItem prop="userName">
 						<Input v-model="formPass.userName" size="large" placeholder="请输入用户名">
 						<span slot="prepend">
@@ -39,14 +39,57 @@
 	                  <Icon :size="14" type="md-lock"></Icon>
 	                </span>
 						</Input>
-						<a class="forget">忘记密码？</a>
+						<a class="forget" @click="resetFun">忘记密码？</a>
 					</FormItem>
 				</Form>
 
 			</TabPane>
 		</Tabs>
-		<Button type="primary" long size="large" @click="toLogin('pass')">{{tab=='phone'?'验证并登录':'登录'}}</Button>
+		<Button type="primary" long size="large" @click="toLogin()">{{type=='phone'?'验证并登录':'登录'}}</Button>
 	</div>
+	
+<Modal
+    v-model="showFind"
+    title="重置密码"
+    width="350px"
+    @on-visible-change=""
+    :footer-hide="true"
+    class=""
+    :mask-closable="false"
+  >
+  	<div class="reset-box">
+		<Form ref="reset" :rules="ruleReset" :model="formReset">
+			<FormItem prop="mobileNo">
+				<Input v-model="formReset.mobileNo" :maxlength="11" placeholder="请输入手机号">
+					<span slot="prepend"><Icon :size="16" type="ios-person"></Icon></span>
+				</Input>
+			</FormItem>
+			<FormItem prop="smsCode" class="captcha">
+				<Input v-model="formReset.smsCode" placeholder="请输入验证码" size="large">
+				<span slot="prepend">
+					<Icon :size="14" type="md-lock"></Icon>
+				</span>
+				</Input>
+				<countdown class="get-code" text="获取验证码" ref="countdown"
+							:phone="formReset.mobileNo" @click="getCode" url="/hxxdc/insurance/sms/send/reset"></countdown>
+			</FormItem>
+			<FormItem prop="password">
+				<Input type="password" v-model="formReset.password" size="large" placeholder="请输入密码">
+					<span slot="prepend"><Icon :size="14" type="md-lock"></Icon></span>
+				</Input>
+			</FormItem>
+			<FormItem prop="rePassword">
+				<Input type="password" v-model="formReset.rePassword" size="large" placeholder="请确认密码">
+					<span slot="prepend"><Icon :size="14" type="md-lock"></Icon></span>
+				</Input>
+			</FormItem>
+			<FormItem style="margin-bottom: 10px">
+				<Button type="primary" long @click="toReset">重置密码</Button>
+			</FormItem>
+		</Form>
+	</div>
+  </Modal>
+  
 </div>
 <foot></foot>
 </div>
@@ -61,17 +104,123 @@ export default {
 	data(){
 		return{
 			type: 'phone',
+			showFind:false,
 			formPhone: {
-
+				userMobile:'',
+				captcha:''
 			},
 			formPass: {
+				userName:'',
+				password:''
+			},
+			formReset:{
+				"mobileNo": "",
+				"password": "",
+				"rePassword": "",
+				"smsCode": ""
+			},
+			rulePhone: {
+				userMobile:[
+					{ required: true, message: '请输入手机号码', },
+				],
+				captcha: [
+					{ required: true,  message: '请填写验证码',}
+				],
+			},//规则验证
+			rulePass: {
+				userName:[
+					{ required: true, message: '请输入用户名', },
+				],
+				password: [
+					{ required: true,  message: '请填写密码',}
+				],
+			},//规则验证
+			ruleReset: {
+				mobileNo:[
+					{ required: true, message: '请输入手机号码', },
+				],
+				smsCode:[{ required: true,  message: '请填写验证码',}],
+				password:[{ required: true,  message: '请输入密码',}],
+				rePassword:[{ required: true,  message: '请输入密码',}],
+			},
 
-			}
 		}
 	},
 	methods:{
 		toLogin(type){
+			
+			let url = '', data = {}
+			if (this.type == 'phone') {
+				data = {
+					"account": this.formPhone.userMobile,
+					"loginMethod": "手机",
+					"password": this.formPhone.captcha,
+				}
+				this.$refs.phone.validate((valid) => {
+					if (valid) {
+						this.toRequest(data);
+					}
+				})
+			}else{
+				data = {
+					"account": this.formPass.userName,
+					"loginMethod": "密码",
+					"password": this.formPass.password,
+				}
+				this.$refs.pass.validate((valid) => {
+					if (valid) {
+						this.toRequest(data);
+					}
+				})
+			}
 
+			
+		},
+		toRequest(param){
+			this.$Spin.show();
+			this.axios.request({
+				url: '/hxxdc/insurance/user/login',
+				method: 'post',
+				data: param
+			}).then(res => {
+				if (res.data.code=="0") {
+					this.$router.push({path: '/main'})
+
+					localStorage.setItem('ACCESSTOKEN', res.data.item.accessToken)
+					localStorage.setItem('USERINFO', JSON.stringify(res.data.item))
+					this.$store.commit('setToken', res.data.item.accessToken)
+					this.$store.commit('setUser', res.data.item)
+
+
+					this.$Spin.hide()
+					this.$Message.success('登录成功')
+				} else {
+					this.$Spin.hide()
+				}
+			})
+		},
+		getCode(code){
+			
+		},
+		resetFun(){
+			this.showFind= true;
+			this.$refs.reset.resetFields();
+		},
+		toReset(){
+			this.$refs.reset.validate((valid) => {
+				if (valid) {
+					this.axios.request({
+						url: '/hxxdc/insurance/user/forget/password',
+						method: 'post',
+						data: this.formReset
+					}).then(res => {
+						if (res.data.code=="0") {
+							this.$Message.success('重置成功');
+                			this.showFind= false;
+						}
+					})
+				}
+			})
 		}
 	}
 }
@@ -142,6 +291,34 @@ export default {
 		width: 100%;
 	}
 }
+.reset-box{
+	.get-code{
+				width: 90px;
+				line-height: 34px;
+				text-align: center;
+				position: absolute;
+				top: 0;
+				right: 0;
+				background-color: #ECF5FF;
+				border-radius: 2px;
+				border: 1px solid #B3D8FF;
+				color: #1890FF;
+				cursor: pointer;
+				&.off{
+					border: 1px solid #dcdee2;
+					background-color: white;
+					color: #777777;
+					cursor: default;
+				}
+			}
+			.forget{
+				position: absolute;
+				right: 0;
+				bottom: -35px;
+				color: #6E7F94;
+				font-size: 12px;
+			}
+}
 </style>
 <style lang="less">
 .login{
@@ -163,5 +340,10 @@ export default {
 	form{
 		margin: 30px 0 40px;
 	}
+}
+.reset-box{
+.captcha .ivu-form-item-content{
+			padding-right: 100px;
+		}
 }
 </style>

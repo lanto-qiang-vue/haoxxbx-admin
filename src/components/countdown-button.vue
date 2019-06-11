@@ -43,10 +43,14 @@ export default {
 			if(!this.disable){
 				if(reg.mobile.test(this.phone)){
 					this.disable= true;
-					this.axiosHxx.post(this.url,{telphone:this.phone, access_token: this.token}).then(res => {
-						if(res.data.success){
-							this.$toast('验证码已发送');
-							this.$emit('click', res.data.data.telSession);
+					this.axios.request({
+              			url: this.url,
+						method: 'post',
+						data: {mobileNo:this.phone}
+          			}).then(res => {
+						if(res.data.code=="0"){
+							this.$Message.success('验证码已发送');
+							this.$emit('click', '');
 							this.startTimers();
 						}else{
 							this.enable()
@@ -56,7 +60,7 @@ export default {
 						this.enable();
 					})
 				}else{
-					this.$toast('请输入正确手机号');
+					this.$Message.error('请输入正确手机号');
 				}
 			}
 		},

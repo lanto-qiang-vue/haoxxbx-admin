@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { Message, Spin } from 'iview';
 
 // axios 配置;
 axios.defaults.timeout = 60000
@@ -43,7 +44,9 @@ axios.interceptors.response.use(
 		    if(response.data.message) content+= ' '+response.data.message
 		    if(response.data.msg) content+= ' '+response.data.msg
 		    if(response.data.code &&content){
-
+					Message.error({
+              content: content,
+              duration: 5})
 		    }
 	    }
     }

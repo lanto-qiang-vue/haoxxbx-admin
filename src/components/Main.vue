@@ -5,9 +5,9 @@
 		<img class="logo" src="~@/assets/img/hoxiuxiu-logo.png"/>
 
 		<div class="right">
-			您好，<b>中国人寿保险公司</b>
-			<a>修改密码</a> |
-			<a>退出</a>
+			您好，<b>{{$store.state.userInfo?$store.state.userInfo.nickname:'中国人寿保险公司'}}</b>
+			<a @click="changePass">修改密码</a> |
+			<a @click="logout">退出</a>
 		</div>
 	</div>
 	</div>
@@ -26,12 +26,38 @@ export default {
 	components: { Foot},
 	computed:{
 		title(){
-			// console.log(this.$route)
-			return this.$route.meta.name
+			console.log(this.$route)
+			// return this.$route.meta.name
+			return '测试人寿保险数据'
 		}
 	},
 	mounted(){
 		console.log(this.$route)
+	},
+	methods:{
+		changePass(){
+			this.$router.push({path: '/change-pass'})
+		},
+		logout(){
+			this.$Modal.confirm({
+				title: '确定退出登录吗？',
+				content:'',
+				onOk: ()=> {
+					this.axios.request({
+						url: '/hxxdc/insurance/user/logout',
+						method: 'get',
+					}).then(res => {
+						localStorage.removeItem('ACCESSTOKEN')
+						localStorage.removeItem('USERINFO')
+						this.$store.commit('setToken', '')
+						this.$store.commit('setUser', '')
+						this.$router.push({
+							path: '/login',
+						})
+					})
+				}
+			})
+		}
 	}
 }
 </script>
