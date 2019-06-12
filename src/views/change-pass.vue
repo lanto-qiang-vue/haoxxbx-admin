@@ -15,7 +15,7 @@
 			</FormItem>
 			<FormItem >
 				<Button type="primary" @click="commitFun('fromPass')">确定</Button>
-				<Button style="margin-left: 10px;" @click="$router.push({path: '/main'})">取消</Button>
+				<Button style="margin-left: 10px;" @click="$router.go(-1)">取消</Button>
 			</FormItem>
 		</Form>
 	</div>

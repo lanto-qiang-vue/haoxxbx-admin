@@ -27,8 +27,8 @@ export default {
 	computed:{
 		title(){
 			console.log(this.$route)
-			// return this.$route.meta.name
-			return '测试人寿保险数据'
+			return this.$route.meta.name
+			// return '测试人寿保险数据'
 		}
 	},
 	mounted(){
