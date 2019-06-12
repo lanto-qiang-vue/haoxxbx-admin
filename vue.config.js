@@ -1,9 +1,20 @@
 const path = require('path')
+const webpack = require('webpack')
 const resolve = dir => {
 	return path.join(__dirname, dir)
 }
 // console.log(process.env.NODE_ENV)
 module.exports = {
+	configureWebpack: {
+		plugins: [
+			new webpack.ProvidePlugin({
+				$:"jquery",
+	
+				jQuery:"jquery",
+				"windows.jQuery":"jquery"
+			})
+		]
+	},
 	chainWebpack: config => {
 		config.resolve.alias
 			.set('@', resolve('src'))
@@ -26,5 +37,5 @@ module.exports = {
                 secure: false
 			},
 		}
-	}
+	},
 }

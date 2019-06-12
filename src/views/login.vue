@@ -184,7 +184,7 @@ export default {
 				data: param
 			}).then(res => {
 				if (res.data.code=="0") {
-					this.$router.push({path: '/main'})
+					this.$router.push({path: '/compare'})
 
 					localStorage.setItem('ACCESSTOKEN', res.data.item.accessToken)
 					localStorage.setItem('USERINFO', JSON.stringify(res.data.item))

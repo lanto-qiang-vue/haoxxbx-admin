@@ -13,7 +13,7 @@
     :columns="columns"
     :stripe="stripe"
     border
-    :highlight-row="true"
+    :highlight-row="false"
     :show-header="showHeader"
     :width="width"
     :height="tableHeight"

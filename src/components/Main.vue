@@ -5,7 +5,7 @@
 		<img class="logo" src="~@/assets/img/hoxiuxiu-logo.png"/>
 
 		<div class="right">
-			您好，<b>{{$store.state.userInfo?$store.state.userInfo.nickname:'中国人寿保险公司'}}</b>
+			您好，<b>{{$store.state.userInfo?$store.state.userInfo.companyName:'中国人寿保险公司'}}</b>
 			<a @click="changePass">修改密码</a> |
 			<a @click="logout">退出</a>
 		</div>
@@ -27,8 +27,8 @@ export default {
 	computed:{
 		title(){
 			console.log(this.$route)
-			// return this.$route.meta.name
-			return '测试人寿保险数据'
+			return this.$route.meta.name
+
 		}
 	},
 	mounted(){
