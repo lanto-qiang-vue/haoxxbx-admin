@@ -26,13 +26,12 @@ export default {
 	components: { Foot},
 	computed:{
 		title(){
-			console.log(this.$route)
 			return this.$route.meta.name
 
 		}
 	},
 	mounted(){
-		console.log(this.$route)
+		console.log(this.$store.state.userInfo)
 	},
 	methods:{
 		changePass(){

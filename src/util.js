@@ -40,7 +40,15 @@ export const getType = (obj) => {
   }
   return map[toString.call(obj)];
 }
-
+export const getToken = () => {
+  // const token = Cookies.get(TOKEN_KEY)
+  const token = localStorage.getItem('ACCESSTOKEN')
+  return token || false
+}
+export const getUser = () => {
+  const val = localStorage.getItem('USERINFO')
+  return val ? JSON.parse(val) : false
+}
 /**
  * @param {data} 任意参数
  * @returns {Object}

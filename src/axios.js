@@ -1,4 +1,5 @@
 import axios from 'axios'
+import router from "./router";
 import { Message, Spin } from 'iview';
 
 // axios 配置;
@@ -35,7 +36,8 @@ axios.interceptors.response.use(
 
 	      localStorage.removeItem("ACCESSTOKEN")
 	      localStorage.removeItem("USERINFO")
-
+				Message.error({content:'登录过期，请重新登录', duration: 3})
+				router.push({path: '/login'})
         break
 
 	    default:{
