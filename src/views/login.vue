@@ -47,7 +47,7 @@
 		</Tabs>
 		<Button type="primary" long size="large" @click="toLogin()">{{type=='phone'?'验证并登录':'登录'}}</Button>
 	</div>
-	
+
 <Modal
     v-model="showFind"
     title="重置密码"
@@ -89,7 +89,7 @@
 		</Form>
 	</div>
   </Modal>
-  
+
 </div>
 <foot></foot>
 </div>
@@ -148,7 +148,7 @@ export default {
 	},
 	methods:{
 		toLogin(type){
-			
+
 			let url = '', data = {}
 			if (this.type == 'phone') {
 				data = {
@@ -174,7 +174,7 @@ export default {
 				})
 			}
 
-			
+
 		},
 		toRequest(param){
 			this.$Spin.show();
@@ -184,23 +184,16 @@ export default {
 				data: param
 			}).then(res => {
 				if (res.data.code=="0") {
-					this.$router.push({path: '/main'})
+					this.$store.dispatch('login', res.data);
 
-					localStorage.setItem('ACCESSTOKEN', res.data.item.accessToken)
-					localStorage.setItem('USERINFO', JSON.stringify(res.data.item))
-					this.$store.commit('setToken', res.data.item.accessToken)
-					this.$store.commit('setUser', res.data.item)
-
-
-					this.$Spin.hide()
+					this.$router.push({path: '/compare'})
 					this.$Message.success('登录成功')
-				} else {
-					this.$Spin.hide()
 				}
+				this.$Spin.hide()
 			})
 		},
 		getCode(code){
-			
+
 		},
 		resetFun(){
 			this.showFind= true;

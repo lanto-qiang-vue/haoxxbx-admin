@@ -1,4 +1,6 @@
 import axios from 'axios'
+import store from '@/store'
+import router from '@/router'
 import { Message, Spin } from 'iview';
 
 // axios 配置;
@@ -13,8 +15,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';
 // Add a request interceptor  请求拦截器
 axios.interceptors.request.use(config => {
 	// console.log(store)
-	// let token= store.state.user.token
-	let token= localStorage.getItem("ACCESSTOKEN")
+	let token= store.state.token
 	if(token) {
 		config.headers.token= token
 	}
@@ -31,12 +32,12 @@ axios.interceptors.response.use(
         case '0': break
 		case '401':
 		case '2000':
-		case '100':
-
-	      localStorage.removeItem("ACCESSTOKEN")
-	      localStorage.removeItem("USERINFO")
-
-        break
+		case '100':{
+			store.dispatch('logout');
+			router.push({path: '/login', query: { redirect: router.currentRoute.fullPath }})
+			// console.log('router', router)
+			break
+		}
 
 	    default:{
 		    let content= ''

@@ -35,7 +35,7 @@ routes: [
 				path: '/compare',
 				name: 'compare',
 				meta:{
-					name: '保险理赔数据比对'
+					name: '保险理赔数据比对',
 				},
 				component: () => import('@/views/compare.vue')
 			},

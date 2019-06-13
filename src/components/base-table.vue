@@ -13,7 +13,7 @@
     :columns="columns"
     :stripe="stripe"
     border
-    :highlight-row="true"
+    :highlight-row="false"
     :show-header="showHeader"
     :width="width"
     :height="tableHeight"
@@ -252,9 +252,10 @@
   }
   .operate{
     margin-bottom: 10px;
-    padding: 15px 15px 10px 15px;
+    padding: 0 10px;
     border: 1px solid #dcdee2;
     border-radius: 3px;
+	  position: relative;
   }
   .operate button{
     margin: 0 5px 5px 0;

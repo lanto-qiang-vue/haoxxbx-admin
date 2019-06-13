@@ -2,7 +2,7 @@
 	<div class="change-pass">
 		<Form ref="fromPass" :rules="rulePass"  :model="fromPass"  :label-width="130" >
 			<FormItem label="操作员名称:">
-				<span>{{$store.state.userInfo?$store.state.userInfo.nickname:'中国人寿保险公司'}}</span>
+				<span>{{$store.state.userInfo?$store.state.userInfo.companyName: ''}}</span>
 			</FormItem>
 			<FormItem  label="当前登录密码:" prop="oldPassword">
 				<Input style="width: 250px;" type="password" v-model="fromPass.oldPassword"  size="large" placeholder="请输入当前登录密码"></Input>
@@ -13,7 +13,7 @@
 			<FormItem   label="确认新登录密码:" prop="rePassword">
 				<Input style="width: 250px;" type="password" v-model="fromPass.rePassword"  size="large" placeholder="请再次输入登录密码"></Input>
 			</FormItem>
-			<FormItem >
+			<FormItem>
 				<Button type="primary" @click="commitFun('fromPass')">确定</Button>
 				<Button style="margin-left: 10px;" @click="$router.go(-1)">取消</Button>
 			</FormItem>

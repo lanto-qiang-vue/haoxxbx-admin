@@ -4,6 +4,7 @@ import router from './router'
 import store from './store'
 import iView from 'iview';
 import axios from './axios.js'
+import '@/auth.js'
 import 'iview/dist/styles/iview.css';
 import '@/assets/common.less'
 

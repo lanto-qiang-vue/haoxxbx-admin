@@ -5,7 +5,7 @@
 		<img class="logo" src="~@/assets/img/hoxiuxiu-logo.png"/>
 
 		<div class="right">
-			您好，<b>{{$store.state.userInfo?$store.state.userInfo.nickname:'中国人寿保险公司'}}</b>
+			您好，<b>{{$store.state.userInfo?$store.state.userInfo.companyName:''}}</b>
 			<a @click="changePass">修改密码</a> |
 			<a @click="logout">退出</a>
 		</div>
@@ -28,7 +28,6 @@ export default {
 		title(){
 			console.log(this.$route)
 			return this.$route.meta.name
-			// return '测试人寿保险数据'
 		}
 	},
 	mounted(){
@@ -47,10 +46,7 @@ export default {
 						url: '/hxxdc/insurance/user/logout',
 						method: 'get',
 					}).then(res => {
-						localStorage.removeItem('ACCESSTOKEN')
-						localStorage.removeItem('USERINFO')
-						this.$store.commit('setToken', '')
-						this.$store.commit('setUser', '')
+						this.$store.dispatch('logout');
 						this.$router.push({
 							path: '/login',
 						})
