@@ -1,7 +1,7 @@
 import axios from 'axios'
 import store from '@/store'
 import router from '@/router'
-import { Message, Spin } from 'iview';
+import { Message } from 'iview';
 
 // axios 配置;
 axios.defaults.timeout = 60000
@@ -35,10 +35,10 @@ axios.interceptors.response.use(
 		case '100':{
 			store.dispatch('logout');
 			router.push({path: '/login', query: { redirect: router.currentRoute.fullPath }})
+			Message.error({content:'登录过期，请重新登录', duration: 3})
 			// console.log('router', router)
 			break
 		}
-
 	    default:{
 		    let content= ''
 		    if(response.data.status) content+= response.data.status

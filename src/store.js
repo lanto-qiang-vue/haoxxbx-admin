@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+// import { getToken, getUser} from '@/util'
 
 Vue.use(Vuex)
+
 
 const toJson= (str)=>{
 	try {
