@@ -18,7 +18,7 @@ let userInfo= localStorage.getItem('USERINFO')
 
 export default new Vuex.Store({
 	state: {
-		token:  toJson(token) || '',
+		token:  token || '',
 		userInfo:  toJson(userInfo) || {},
 	},
 	mutations: {
