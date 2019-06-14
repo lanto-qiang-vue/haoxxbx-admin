@@ -323,6 +323,9 @@ export default {
 				  for(let i in this.confirmData){
 					  this.confirmData[i]='';
 				  }
+				  if(res.data.value){
+					  this.$Message.warning({content: res.data.value})
+				  }
 				  this.page= 1;
                   this.getList();
               }
