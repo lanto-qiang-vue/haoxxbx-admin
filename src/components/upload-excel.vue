@@ -126,6 +126,8 @@
         // console.log('upload 数据',res);
         if(res.code=="0"){
           this.$emit('closeFile');
+          this.$Message.success('导入成功');
+          this.show = false;
         }else{
           this.$Message.error(res.status);
         }
