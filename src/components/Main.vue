@@ -12,7 +12,7 @@
 	</div>
 	</div>
 	<div class="body">
-		<h1>{{title}}</h1>
+		<h1 v-show="title">{{title}}</h1>
 		<router-view></router-view>
 	</div>
 	<foot></foot>

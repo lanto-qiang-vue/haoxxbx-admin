@@ -39,6 +39,22 @@ routes: [
 				},
 				component: () => import('@/views/compare.vue')
 			},
+			{
+				path: '/admin/company',
+				name: 'admin-company',
+				meta:{
+					name: '保险公司管理',
+				},
+				component: () => import('@/views/admin/company.vue')
+			},
+			{
+				path: '/admin/user',
+				name: 'admin-company',
+				meta:{
+					name: '用户管理',
+				},
+				component: () => import('@/views/admin/user.vue')
+			},
 		]
 	},
 ]
