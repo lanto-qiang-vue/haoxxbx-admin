@@ -237,11 +237,11 @@ export default {
 					}
 				}
 			},
-			{title: '维修企业名称', key: 'repairCompanyName', minWidth: 120,},
+			{title: '维修企业名称', key: 'repairCompanyName', minWidth: 150,},
 			{title: '送修日期', key: 'repairTime', minWidth: 120,},
 			{title: '结算日期', key: 'settlementTime', minWidth: 120,},
 			{title: '故障描述', key: 'faultInfo', minWidth: 120,},
-			{title: '比对日期', key: 'comparisonTime', minWidth: 120,},
+			{title: '比对时间', key: 'comparisonTime', minWidth: 120,},
 			{title: '查询车牌结果', key: 'searchVehiclePlateNumber', minWidth: 120,},
 			{title: '查询VIN码结果', key: 'searchVin', minWidth: 120,}
 
