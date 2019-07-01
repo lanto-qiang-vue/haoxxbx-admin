@@ -75,13 +75,11 @@ export default {
 							})
 						]);
 					}else{
-						return h('div', [
-							h('span', params.row.vehiclePlateNumber)
-						]);
+						return h('div',params.row.vehiclePlateNumber);
 					}
 				}
 			},
-			{title: '车辆识别号VIN', key: 'vin', minWidth: 130,
+			{title: '车辆识别号VIN', key: 'vin', minWidth: 250,
 				renderHeader:(h,params)=>{
 					return h('div',[
 						h('span','车辆识别号VIN'),
@@ -111,9 +109,8 @@ export default {
 							})
 						]);
 					}else{
-						return h('div', [
-							h('span', params.row.vin)
-						]);
+						return h('div',params.row.vin);
+
 					}
 				}
 			},
@@ -148,9 +145,7 @@ export default {
 							})
 						]);
 					}else{
-						return h('div', [
-							h('span', params.row.insuranceTime)
-						]);
+						return h('div', params.row.insuranceTime);
 					}
 				}
 			},
@@ -185,13 +180,11 @@ export default {
 							})
 						]);
 					}else{
-						return h('div', [
-							h('span', params.row.closeTime)
-						]);
+						return h('div', params.row.closeTime);
 					}
 				}
 			},
-			{title: '开票企业名称', key: 'invoiceCompanyName', minWidth: 150,
+			{title: '开票企业名称', key: 'invoiceCompanyName', minWidth: 200,
 				render: (h, params) => {
 					if(params.index==0){
 						return h('div', [
@@ -208,13 +201,11 @@ export default {
 							})
 						]);
 					}else{
-						return h('div', [
-							h('span', params.row.invoiceCompanyName)
-						]);
+						return h('div', params.row.invoiceCompanyName);
 					}
 				}
 			},
-			{title: '理赔项目', key: 'claimsItem', minWidth: 150,
+			{title: '理赔项目', key: 'claimsItem', minWidth: 200,
 				render: (h, params) => {
 					if(params.index==0){
 						return h('div', [
@@ -231,9 +222,7 @@ export default {
 							})
 						]);
 					}else{
-						return h('div', [
-							h('span', params.row.claimsItem)
-						]);
+						return h('div', params.row.claimsItem);
 					}
 				}
 			},
@@ -243,7 +232,8 @@ export default {
 			{title: '故障描述', key: 'faultInfo', minWidth: 120,},
 			{title: '比对时间', key: 'comparisonTime', minWidth: 120,},
 			{title: '查询车牌结果', key: 'searchVehiclePlateNumber', minWidth: 120,},
-			{title: '查询VIN码结果', key: 'searchVin', minWidth: 120,}
+			{title: '查询VIN码结果', key: 'searchVin', minWidth: 120,},
+			{title: '企业类别', key: 'categoryName', minWidth: 140,}
 
 		],
 		tableData: [{}],

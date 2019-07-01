@@ -134,7 +134,7 @@
         this.filename = "请选择文件";
       },
       down() {
-          window.location.href = "/file/保险理赔数据导入.xlsx";
+          window.location.href = "/file/理赔数据校验核对模板 v1.xlsx";
       },
     }
   }

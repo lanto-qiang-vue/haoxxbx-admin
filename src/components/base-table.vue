@@ -10,7 +10,7 @@
     class="main-table"
     ref="tablesMain"
     :data="data"
-    :columns="columns"
+    :columns="tableColumns"
     :stripe="stripe"
     border
     :highlight-row="false"
@@ -40,6 +40,7 @@
 </div>
 </template>
 <script>
+import { deepClone} from '@/util.js'
 	export default {
 		name: "common-table",
     props: {
@@ -98,7 +99,8 @@
         type: String
       },
       disabledHover: {
-        type: Boolean
+        type: Boolean,
+        default: true
       },
       loading: {
         type: Boolean,
@@ -165,6 +167,16 @@
         this.data= data
 
       },
+    },
+    computed:{
+      tableColumns(){
+        let arr= deepClone(this.columns)
+        for (let i in arr){
+          // arr[i].ellipsis= true
+          arr[i].tooltip= true
+        }
+        return arr
+      }
     },
     mounted() {
 		  let self= this
@@ -278,6 +290,7 @@
     padding-bottom: 0;
   }
   .main-table{
+    position: relative;
     .ivu-table-row{
       cursor: default;
     }
